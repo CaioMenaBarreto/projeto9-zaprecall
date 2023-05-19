@@ -32,16 +32,19 @@ export default function App() {
 }
 
 const GuardaPerguntas = styled.div`
-  width: 1279px;
+  width: 100%;
   margin-bottom: 90px;
-
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
   @media (max-width: 768px) {
     width: 100%;
   }
 `;
 
 const Conteiner = styled.div`
-  width: 1279px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -54,7 +57,7 @@ const Conteiner = styled.div`
 `;
 
 const Footer = styled.div`
-  width: 375px;
+  width: 100%;
   height: 70px;
   background: #ffffff;
   box-shadow: 0px -4px 6px rgba(0, 0, 0, 0.05);
