@@ -207,7 +207,7 @@ const Conteiner2 = styled.div`
   justify-content: space-around;
   align-items: center;
   background-color: #FB6B6B;
-  @media(max-width: 375px){
+  @media(max-width: 768px){
     width: 100%; 
     display: flex;
     flex-direction: column;
@@ -241,7 +241,7 @@ const Pergunta = styled.div`
     right: 0;
   }
 
-  @media(max-width: 375px){
+  @media(max-width: 768px){
     width: 300px;
     display: flex;
     justify-content: space-between;

@@ -35,7 +35,7 @@ const GuardaPerguntas = styled.div`
   width: 1279px;
   margin-bottom: 90px;
 
-  @media (max-width: 375px) {
+  @media (max-width: 768px) {
     width: 100%;
   }
 `;
@@ -48,7 +48,7 @@ const Conteiner = styled.div`
   align-items: center;
   background-color: #fb6b6b;
 
-  @media (max-width: 375px) {
+  @media (max-width: 768px) {
     width: 100%;
   }
 `;
@@ -65,7 +65,7 @@ const Footer = styled.div`
   justify-content: center;
   margin-top: 180px;
 
-  @media (max-width: 375px) {
+  @media (max-width: 768px) {
     width: 100%;
   }
 `;

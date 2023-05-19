@@ -30,7 +30,7 @@ const Cabeçalho = styled.div`
     text-align: center;
     color: #FFFFFF;
   }
-  @media(max-width: 375px){
+  @media(max-width: 768px){
     width: 100%;
     display: flex;
   justify-content: center;
