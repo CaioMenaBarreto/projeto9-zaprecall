@@ -30,4 +30,24 @@ const Cabeçalho = styled.div`
     text-align: center;
     color: #FFFFFF;
   }
+  @media(max-width: 375px){
+    width: 100%;
+    display: flex;
+  justify-content: center;
+  align-items: center;
+  img{
+    width: 52px;
+    height: 60px;
+  }
+  p{
+    font-family: 'Righteous';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 36px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: #FFFFFF;
+  }
+  }
 `
