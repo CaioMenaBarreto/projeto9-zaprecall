@@ -1,6 +1,9 @@
 import styled from 'styled-components';
 import Seta from "./assets/seta_play.png";
 import Virar from "./assets/seta_virar.png";
+import Erro from './assets/icone_erro.png';
+import Quase from './assets/icone_quase.png';
+import Certo from './assets/icone_certo.png';
 import { useState } from 'react';
 
 function Perguntas(props) {
@@ -8,39 +11,69 @@ function Perguntas(props) {
     const [primeiraTela, setPrimeiraTela] = useState(true);
     const [segundaTela, setSegundaTela] = useState(false);
     const [terceiraTela, setTerceiraTela] = useState(false);
+    const [quartaTela, setQuartaTela] = useState(false);
+    const [quintaTela, setQuintaTela] = useState(false);
+    const [sextaTela, setSextaTela] = useState(false);
+    const [imagemResposta, setImagemResposta] = useState(null);
+    const [opcaoSelecionada, setOpcaoSelecionada] = useState('');
 
-    const { id, question, answer } = props;
+
+    const { id, question, answer, cont, setCont} = props;
 
 
     function mostrarPergunta(idDaQuestao) {
         setPrimeiraTela(false);
         setSegundaTela(true);
-        console.log(question);
     }
 
     function mostrarResposta(idDaResposta) {
         setSegundaTela(false);
         setTerceiraTela(true);
-        console.log(answer);
     }
+
+    function finalizarCardErro(idDaResposta) {
+        setTerceiraTela(false);
+        setQuartaTela(true);
+        setCont((prevCont) => prevCont + 1);
+        setImagemResposta(Erro);
+        setOpcaoSelecionada('erro');
+    }
+    
+    function finalizarCardQuase(idDaResposta) {
+        setTerceiraTela(false);
+        setQuartaTela(true);
+        setCont((prevCont) => prevCont + 1);
+        setImagemResposta(Quase);
+        setOpcaoSelecionada('quase');
+    }
+    
+    function finalizarCardZap(idDaResposta) {
+        setTerceiraTela(false);
+        setQuartaTela(true);
+        setCont((prevCont) => prevCont + 1);
+        setImagemResposta(Certo);
+        setOpcaoSelecionada('zap');
+    }
+
+
 
     if (primeiraTela === true) {
         return (
-            <Conteiner2>
-                <Pergunta>
-                    <Texto>Pergunta {id}</Texto>
-                    <img onClick={() => mostrarPergunta(id)} src={Seta} alt="" />
-                </Pergunta>
-            </Conteiner2>
+                <Conteiner2 data-test="flashcard">
+                    <Pergunta>
+                        <Texto data-test="flashcard-text" >Pergunta {id}</Texto>
+                        <img data-test="play-btn" onClick={() => mostrarPergunta(id)} src={Seta} alt="" />
+                    </Pergunta>
+                </Conteiner2>
         );
     }
 
     if (segundaTela === true) {
         return (
-            <Conteiner2>
+            <Conteiner2 data-test="flashcard">
                 <Pergunta ativa={segundaTela === true}>
-                    <Texto>{question}</Texto>
-                    <img onClick={() => mostrarResposta(id)} src={Virar} alt="" />
+                    <Texto data-test="flashcard-text">{question}</Texto>
+                    <img data-test="turn-btn" onClick={() => mostrarResposta(id)} src={Virar} alt="" />
                 </Pergunta>
             </Conteiner2>
         );
@@ -48,18 +81,18 @@ function Perguntas(props) {
 
     if (terceiraTela === true) {
         return (
-            <Conteiner2>
+            <Conteiner2 data-test="flashcard">
                 <Pergunta ativa={terceiraTela === true}>
-                    <Texto>{answer}</Texto>
+                    <Texto data-test="flashcard-text">{answer}</Texto>
                     <ConteinerOpções>
-                        <NãoLembrei onClick={finalizarCard}>
+                        <NãoLembrei data-test="no-btn" onClick={() => finalizarCardErro(id)}>
                             <p>Não</p>
                             <p>Lembrei</p>
                         </NãoLembrei>
-                        <QuaseNãoLembrei onClick={finalizarCard}>
+                        <QuaseNãoLembrei data-test="partial-btn" onClick={() => finalizarCardQuase(id)}>
                             <p>Quase não lembrei</p>
                         </QuaseNãoLembrei>
-                        <Zap onClick={finalizarCard}>
+                        <Zap data-test="zap-btn" onClick={() => finalizarCardZap(id)}>
                             <p>Zap!</p>
                         </Zap>
                     </ConteinerOpções>
@@ -68,7 +101,42 @@ function Perguntas(props) {
         );
     }
 
+    if (quartaTela === true) {
+        return (
+            <Conteiner2 data-test="flashcard">
+                <Pergunta>
+                    <Texto data-test="flashcard-text" opcao={opcaoSelecionada}>Pergunta {id}</Texto>
+                    <img data-test="no-icon" src={imagemResposta} alt="" />
+                </Pergunta>
+            </Conteiner2>
+        );
+    }
+
+    if (quintaTela === true) {
+        return (
+            <Conteiner2 data-test="flashcard">
+                <Pergunta>
+                    <Texto data-test="flashcard-text" opcao={opcaoSelecionada}>Pergunta {id}</Texto>
+                    <img data-test="partial-icon" src={imagemResposta} alt="" />
+                </Pergunta>
+            </Conteiner2>
+        );
+    }
+
+    if (sextaTela === true) {
+        return (
+            <Conteiner2 data-test="flashcard">
+                <Pergunta>
+                    <Texto data-test="flashcard-text" opcao={opcaoSelecionada}>Pergunta {id}</Texto>
+                    <img data-test="zap-icon" src={imagemResposta} alt="" />
+                </Pergunta>
+            </Conteiner2>
+        );
+    }
+
 }
+
+
 
 const Zap = styled.div`
     width: 85px;
@@ -81,7 +149,7 @@ const Zap = styled.div`
     border-radius: 5px;
 
     p{
-        font-family: 'Recursive';
+        font-family: 'Recursive', sans-serif;
         font-weight: 400;
         font-size: 12px;
         color: #FFFFFF;
@@ -99,7 +167,7 @@ const QuaseNãoLembrei = styled.div`
     border-radius: 5px;
 
     p{
-        font-family: 'Recursive';
+        font-family: 'Recursive', sans-serif;
         font-weight: 400;
         font-size: 12px;
         color: #FFFFFF;
@@ -118,7 +186,7 @@ const NãoLembrei = styled.div`
     border-radius: 5px;
 
     p{
-        font-family: 'Recursive';
+        font-family: 'Recursive', sans-serif;
         font-weight: 400;
         font-size: 12px;
         color: #FFFFFF;
@@ -197,13 +265,22 @@ const Pergunta = styled.div`
 `;
 
 const Texto = styled.div`
-    font-family: 'Recursive';
+    font-family: 'Recursive', sans-serif;
     font-weight: 700;
     font-size: 16px;
-    color: #333333;
+    color: ${({ opcao }) =>
+      opcao === 'erro'
+        ? 'red'
+        : opcao === 'quase'
+        ? 'orange'
+        : opcao === 'zap'
+        ? 'green'
+        : '#333333'};
     margin-left: 22px;
     align-self: flex-start;
     margin-top: 18px;
-  `
+    text-decoration: ${({ opcao }) =>
+      opcao ? 'line-through' : 'none'};
+  `;
 
 export default Perguntas
